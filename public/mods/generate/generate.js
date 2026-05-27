@@ -1,3 +1,4 @@
+import "jszip"
 
 const versions = []
 
@@ -20,7 +21,7 @@ document.addEventListener("DOMContentLoaded", () => {
     })
 })
 
-lwjglMap = [
+const lwjglMap = [
     ["1.13", "3.3.3"],
     ["1.8.2", "2.9.4-nightly-20150209"],
     ["1.7.5", "	2.9.1"],
@@ -70,7 +71,7 @@ function fixVersion(candidate, intermediary) {
 }
 
 function getLwjgl(version) {
-    for ([min, lwjgl] of lwjglMap) {
+    for (const [min, lwjgl] of lwjglMap) {
         if (semverCompare(min, version) >= 0) {
             return lwjgl
         }
@@ -90,7 +91,7 @@ async function generateInstance(version, loader) {
         if (!res.ok) throw Error("error in fetching instance components")
         return res.text()
     }).then(it => process(it, loader, version, fixed, lwjgl)))).then(([cfg, pack, patch]) => {
-            const zip = new JSZip()
+            const zip = new window.JSZip()
             zip.file("instance.cfg", cfg)
             zip.file("mmc-pack.json", pack)
             zip.file("patches/net.fabricmc.intermediary.json", patch)
@@ -145,12 +146,12 @@ function semverCompare(a, b) {
     b = (specialVersions[b] ?? b).split(".")
     const max_len = Math.max(a.length, b.length)
     for (let i = 0; i < max_len; i++) {
-        a_i = parseInt(a[i] ?? 0)
-        b_i = parseInt(b[i] ?? 0)
+        const a_i = parseInt(a[i] ?? 0)
+        const b_i = parseInt(b[i] ?? 0)
         if (a_i != b_i) return b_i - a_i
     }
-    a_pre = a.at(-1).split("-")[1]
-    b_pre = b.at(-1).split("-")[1]
+    const a_pre = a.at(-1).split("-")[1]
+    const b_pre = b.at(-1).split("-")[1]
     if (a_pre == b_pre) return 0
     if (a_pre == undefined) return -1
     if (b_pre == undefined) return 1
