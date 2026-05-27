@@ -1,0 +1,257 @@
+/* a:not(.button) {
+    background: url("/images/external.svg") center right no-repeat;
+    padding-right: 14px;
+} */
+
+a.external-pdf {
+    background: url("/images/pdf.png") center right no-repeat;
+    padding-right: 20px;
+}
+
+@font-face {
+    font-family: Inter;
+    src: url("/vendor/inter.woff2");
+}
+
+h1,
+p {
+    margin: auto;
+}
+
+ul {
+    list-style-type: square;
+    padding: 10px 0px 10px 20px;
+    margin: 0;
+}
+
+a.button {
+    cursor: pointer;
+    text-decoration: none;
+    background: rgb(55, 50, 98);
+    padding: 5px 7px 5px 7px;
+    color: snow;
+    display: inline-block;
+    margin: 5px;
+    margin-left: 0;
+}
+
+a.button-link {
+    text-decoration: none;
+}
+
+a.button-link:hover {
+    text-decoration: underline;
+}
+
+.options {
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 600px;
+}
+
+.options>div {
+    white-space: nowrap;
+    flex-grow: 1;
+}
+
+.options p {
+    padding-bottom: 5px;
+}
+
+.options input {
+    margin: auto;
+}
+
+#mods {
+    position: relative;
+}
+
+#mods>h2 {
+    margin: 0;
+    padding: 0;
+}
+
+#mods>p {
+    margin: 0;
+    padding-top: 5px;
+    padding-bottom: 10px;
+}
+
+summary {
+    list-style: none;
+    display: flex;
+    padding: 6px;
+    padding-top: 5px;
+    user-select: none;
+}
+
+[open]:not(.hide-arrow) summary {
+    border-bottom: 1px solid snow;
+}
+
+:root {
+    --symbol: ">";
+    --link: rgb(79, 156, 255);
+    /* --link: #bb86fc; */
+    --checkbox: #bb86fc;
+    --background: #16181c;
+}
+
+summary::before {
+    content: ">";
+}
+
+summary.legal-listing::before {
+    content: var(--symbol);
+}
+
+summary span {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+[open] summary::before {
+    content: "v";
+}
+
+span.name-align {
+    flex-grow: 1;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+summary::before,
+input+label::before {
+    font-family: Consolas, monaco, monospace;
+}
+
+.mod-entry p {
+    /* yikes */
+    padding: 10px;
+    padding-top: 8px;
+    padding-left: 22px;
+    font-size: 16px;
+}
+
+.mod-entry {
+    max-width: 800px;
+    border: 1px solid snow;
+    border-bottom: 0;
+    font-size: 18px;
+}
+
+.mod-entry:last-child {
+    border: 1px solid snow;
+}
+
+body {
+    font-family: Inter;
+    background-color: var(--background);
+    color: snow;
+    max-width: 1000px;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+hr {
+    border: 0px;
+    margin: 0px;
+    padding: 3px;
+}
+
+a {
+    color: var(--link);
+}
+
+summary>span:not(.name-align) {
+    font-size: 14px;
+}
+
+summary>* {
+    align-self: center;
+}
+
+input:is([type="checkbox"], [type="radio"])+label::before {
+    color: var(--checkbox);
+    padding-bottom: 2px;
+    white-space: nowrap;
+}
+
+.options input:is([type="checkbox"], [type="radio"])+label::before {
+    padding-right: 10px;
+}
+
+input[type="checkbox"]+label::before {
+    content: "[ ]";
+}
+
+input[type="checkbox"]:checked+label::before {
+    content: "[x]";
+}
+
+input[type="radio"]+label::before {
+    content: "[ ]";
+}
+
+input[type="radio"]:checked+label::before {
+    content: "[o]";
+}
+
+input[type="checkbox"].auto-dependency+label::before {
+    content: "[+]";
+    color: cornflowerblue;
+}
+
+/* don't need the :not(:checked) because the tag gets removed if the box is selected, but it's more specific */
+input[type="checkbox"].incompatible+label::before {
+    content: "[/]";
+    color: grey;
+}
+
+input[type="checkbox"].missing-dependency+label::before {
+    content: "[!]";
+    color: red;
+}
+
+input[type="checkbox"].override-incompatible+label::before {
+    content: "[#]";
+    color: pink;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.hide-arrow>summary::before {
+    content: ""
+}
+
+#accessibility-warning,
+#optifine-warning {
+    position: absolute;
+    top: 300px;
+    border: 1px solid snow;
+    background-color: var(--background);
+    left: 35px;
+    right: 35px;
+    top: 25%;
+    /* .mod_entry width - left - right - padding-left - padding-right */
+    max-width: 710px;
+    padding: 10px;
+}
+
+.disabled {
+    color: grey !important;
+    pointer-events: none;
+}
+
+#version-dropdown {
+    border: 1px solid snow;
+    max-width: 130px;
+    width: 95%;
+    color: snow;
+    background-color: var(--background);
+    padding: 5px;
+    border-radius: 3px;
+}

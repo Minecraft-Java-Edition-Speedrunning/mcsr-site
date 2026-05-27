@@ -1,0 +1,9 @@
+{
+  "devDependencies": {
+    "jszip": "^3.10.1",
+    "wrangler": "^4.95.0"
+  },
+  "scripts": {
+    "postinstall": "mkdir public/vendor; cp node_modules/jszip/dist/jszip.min.js public/vendor"
+  }
+}
