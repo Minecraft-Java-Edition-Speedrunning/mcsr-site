@@ -113,7 +113,7 @@ h1 {
   /* border-radius:6px; */
   border:1px solid rgba(255,255,255,0.5);
   display:flex;
-  align-items:center;
+  /* align-items:center; */
   gap:8px;
   min-height:48px;
 }
@@ -131,10 +131,11 @@ h1 {
     margin-left:auto;
 }
 
-.beta{
+.beta {
     color:var(--muted);
     font-style:normal;
     margin-left: auto;
+    align-content: center;
 }
 
 .sep {
@@ -144,7 +145,7 @@ h1 {
 }
 
 .note {
-    margin-top:14px;
+    margin-bottom: 0px;
     color:var(--muted);
     font-size:13px;
 }
