@@ -666,7 +666,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     document.querySelector("#ms-share").addEventListener("click", () => {
         const config = currConfig
-        const url = new URL(window.location.origin)
+        const url = new URL(window.location)
         const params = url.searchParams
         params.append("version", config.version)
         params.append("category", config.category)
