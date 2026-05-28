@@ -40,7 +40,7 @@ body {
   max-width:1000px;
   display:grid;
   grid-template-columns: 1fr;
-  gap:20px;
+  /* gap:20px; */
 }
 
 .site-header {
@@ -51,23 +51,13 @@ body {
   padding:12px 16px;
   /* border-radius:8px; */
   /* background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent); */
-  border: 1px solid rgba(255,255,255,0.5);
+  /* border: 1px solid rgba(255,255,255,0.5); */
 }
 
 .brand {
     display:flex;
     align-items:center;
     gap:12px;
-}
-
-.mini-icon {
-    width:44px;
-    height:44px;
-    display:inline-flex;
-    align-items:center;
-    justify-content:center;
-    background:rgba(255,255,255,0.03);
-    border:1px solid rgba(255,255,255,0.5)
 }
 
 h1 {
@@ -85,11 +75,11 @@ h1 {
   padding:12px;
   /* border-radius:8px; */
   /* background: linear-gradient(180deg, rgba(255,255,255,0.02), transparent); */
-  border: 1px solid rgba(255,255,255,0.5);
+  /* border: 1px solid rgba(255,255,255,0.5); */
 }
 
 .current-line {
-  margin-bottom:12px;
+  margin-bottom:20px;
   font-weight:700;
   font-size: 16pt;
 }
@@ -110,8 +100,8 @@ h1 {
 .releases li {
   /* background: linear-gradient(180deg, rgba(255,255,255,0.02), transparent); */
   padding:10px;
-  /* border-radius:6px; */
-  border:1px solid rgba(255,255,255,0.5);
+  border-radius:6px;
+  border:1px solid rgba(255,255,255,0.25);
   display:flex;
   /* align-items:center; */
   gap:8px;
