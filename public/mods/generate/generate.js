@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", () => {
 const lwjglMap = [
     ["1.13", "3.3.3"],
     ["1.8.2", "2.9.4-nightly-20150209"],
-    ["1.7.5", "	2.9.1"],
+    ["1.7.5", "2.9.1"],
     ["1.7.3", "2.9.1-nightly-20131120"],
     ["1.0.0", "2.9.0"]
 ]
@@ -96,7 +96,7 @@ async function generateInstance(version, loader) {
             zip.file("mmc-pack.json", pack)
             zip.file("patches/net.fabricmc.intermediary.json", patch)
             zip.generateAsync({ type: "blob" })
-                .then(it => downloadBlob(it, `${version}+loader.${loader}.zip`, "application/zip"))
+                .then(it => downloadBlob(it, `${version}-loader-${loader}.zip`, "application/zip"))
 
         })
 }
