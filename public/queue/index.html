@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>QueueClient</title>
+    <style>
+      body.light {
+        background: white;
+        color: black
+      }
+      body.dark {
+        background: #222;
+        color: #e6e6e6
+      }
+      button.dark, input.dark, select.dark {
+        background: #3b3b3b;
+        color: #e6e6e6;
+        border: 1px solid;
+        border-radius: 3px;
+      }
+      .xlight.dark, .xdark.light {
+        display: none
+      }
+      a:link {
+        color: #08e
+      }
+      a:visited {
+        color: #af69ef
+      }
+      .external:after {
+        content: url(https://upload.wikimedia.org/wikipedia/commons/4/44/Icon_External_Link.svg);
+        margin: 0 0 0 3px
+      }
+      button.link {
+        background: none!important;
+        border: none!important;
+        padding: 0!important;
+        font-family: sans-serif;
+        font-size: medium;
+        color: #08e!important;
+        text-decoration: underline;
+        cursor: pointer
+      }
+      mark.light {
+        background-color: yellow;
+        color: black
+      }
+      mark.dark {
+        background-color: transparent;
+        color: yellow
+      }
+    </style>
+    <script type="text/javascript">
+      mode = "dark";
+
+      function light() {
+        let elements = [];
+        for (let x of document.getElementsByClassName("dark"))
+          elements.push(x);
+        for (let x of elements) {
+          x.classList.remove("dark");
+          x.classList.add("light");
+        }
+        mode = "light";
+      }
+
+      function dark() {
+        let elements = [];
+        for (let x of document.getElementsByClassName("light"))
+          elements.push(x);
+        for (let x of elements) {
+          x.classList.remove("light");
+          x.classList.add("dark");
+        }
+        mode = "dark";
+      }
+      const HEADER = "https://www.speedrun.com/api/v1/";
+      
+      async function json_from_url_await(url) {
+        let resp = await fetch(url);
+        if (resp.ok)
+          return resp.json();
+        else
+          throw resp.status;
+      }
+
+      async function json_from_src_await(short_url) {
+        return await json_from_url_await(HEADER + short_url);
+      }                
+
+      async function continual_data_await_fast_reverse(short_url, limit) {
+        if (limit % 200)
+          throw "Limit must be a multiple of 200";
+        if (limit > 10000)
+          throw "Limit must be no greater than 10000";
+        
+        let hold = [];
+        let holdD = {};
+        let asc_hi;
+        let desc_lo;
+
+        async function next_await_fast_reverse(start, reverse) {
+          let promises = [];
+          let dir = reverse ? "desc" : "asc";
+          for (let i = 0; i < limit; i += 200) {
+            promises.push(json_from_src_await(
+              short_url + (short_url.includes("?") ? "&" : "?") + `orderby=submitted&direction=${await dir}&max=200` +
+              `&offset=${start * limit + i}`
+            ).then(json => {hold.push(...json.data.map(free))
+                    if (i == limit - 200 && json.data.length > 0) {
+                      if (reverse) {desc_lo = json.data[json.data.length - 1].submitted;}
+                      else {asc_hi = json.data[json.data.length - 1].submitted;}}}));
+          }
+          await Promise.all(promises);
+          if ((asc_hi === undefined || desc_lo === undefined || asc_hi <= desc_lo) && hold.length == (start + 1) * limit + 10000 * reverse) {
+            if (hold.length == 10000 && !reverse)
+              await next_await_fast_reverse(0, true);
+            else if (hold.length == 20000)
+              throw -1;
+            else
+              await next_await_fast_reverse(start + 1, reverse);
+          }
+        }
+
+        return await next_await_fast_reverse(0, false).then(_ => {
+                                                              for (let run of hold)
+                                                                if (!(run.id in holdD)) {holdD[run.id] = run;}
+                                                              return Object.values(holdD);
+                                                            });
+      }
+      
+      const CAT_FREE = ["links", "miscellaneous", "players", "rules", "type", "weblink"];
+      const PLAYER_FREE = ["assets", "hitbox", "links", "pronouns", "signup", "speedrunslive", "supporterAnimation", "twitch", "twitter",
+                           "weblink", "youtube"];
+      const RUN_FREE = ["comment", "links", "splits", "status", "system"];
+      
+      function free(run) {
+        for (let prop of CAT_FREE)
+          delete run.category.data[prop];
+        if (run.level.data.length !== 0) {
+          for (let prop of CAT_FREE)
+            delete run.level.data[prop];
+        }
+        for (let player of run.players.data) {
+          for (let prop of PLAYER_FREE)
+            delete player[prop];
+        }
+        for (let prop of RUN_FREE)
+          delete run[prop];
+        return run;
+      }
+
+      function default_flag(run) {
+        return "";
+      }
+
+      function celeste_flag(run) {
+        let milli = Math.round(run.times.primary_t * 1000);
+        return (milli % 17 != 0) ? `<div title="Time is not a multiple of 0.017"><mark class="${mode}">F</mark></div>` : "";
+      }
+
+      function mc_mcce_flag(run) {
+        const ranges = {"mkeyl926": ["wl33kewl", {"gq7zo9p1": [0, 8], // Any% Glitchless
+                                                  "21go6e6q": [9, 15],
+                                                  "4qye4731": [16, Infinity]}],
+                        "wkpn0vdr": ["wlexoyr8", {"jqzywv2l": [0, 8], // Any%
+                                                  "81pjwxn1": [9, Infinity],
+                                                  "klr6djol": [14, Infinity]}],
+                        "wk63eek1": ["0nw2y7xn", {"jqz6p0m1": [0, 6], // All Achievements
+                                                  "klrzp521": [8, 11]}],
+                        "xk9gz16d": ["789je4qn", {"81pd4881": [12, 12], // All Advancements
+                                                  "xqkm97kl": [13, 13],
+                                                  "gq7r9kdl": [14, 14],
+                                                  "81p687gq": [15, 15],
+                                                  "klrw35m1": [16, 16],
+                                                  "mlnno7nl": [17, 17]}],
+                        "zd301qed": ["68kd9yql", {"21go6emq": [0, 8], // Any% RSG Co-op
+                                                  "jqzywvml": [9, 15],
+                                                  "rqvojn6l": [16, Infinity]}],
+                        "xd114pzd": ["wl314d98", {"zqo0omgq": [16, 16], // All Advancements Co-op
+                                                  "0q5po6ml": [17, 17]}],
+                        "7kj6qvn2": ["wl30d66l", {"4lxw0e41": [0, 8], // Any% Glitchless Demo
+                                                  "814ek7vl": [9, 15],
+                                                  "z19g588l": [16, Infinity]}],
+                        "9d86nz62": ["ylqmmrvn", {"rqv3j6rl": [0, 8], // Any% Glitchless Peaceful
+                                                  "5ledp3m1": [9, Infinity]}],
+                        "xd1qp728": ["gnxvv7gl", {"0q5kdx7q": [0, 8], // Any% Peaceful
+                                                  "4lx3m03l": [9, Infinity]}],
+                        "n2y9z41d": ["jlzrovq8", {"mlnp8rd1": [16, 16]}], // Filtered Seed Glitchless
+                        "7kj1wexk": ["68k4pjkl", {"mlnrk80q": [0, 8], // Kill Bosses
+                                                  "gq70v5dl": [9, 15],
+                                                  "81039vw1": [16, Infinity]}],
+                        "xk987oy2": [null, [12, Infinity]], // How Did We Get Here?
+                        "q25gyyyd": [null, [14, Infinity]], // Hero of the Village
+                        "jdrlexgd": [null, [14, Infinity]], // Arbalistic
+                        "7dg4popd": ["dloyre58", {"jq6k96nl": [0, 15], // All Swords
+                                                  "5lmjr0yl": [16, Infinity]}],
+                        "mkeqm06k": ["kn0jv3zl", {"5leor7zq": [0, 1], // All Wood Logs
+                                                  "0q56njn1": [2, 6],
+                                                  "z19gj0jl": [7, 15],
+                                                  "p12e6gv1": [16, Infinity]}],
+                        "5dw7zllk": ["kn0mkqzl", {"p12n2rk1": [0, 13], // All Wool
+                                                  "81pjxvk1": [14, Infinity]}],
+                        "ndx9ezod": ["9l77rgzl", {"013eonkq": [5, 15], // All Minerals
+                                                  "rqvwk551": [16, 16],
+                                                  "xqk5on4q": [17, Infinity]}],
+                        "5dwg0znk": [null, [14, Infinity]], // All Workstations
+                        "w20x6982": [null, null, "15w14a"], // 15w14a
+                        "rkl3gqnk": [null, null, "20w14∞"], // 20w14∞
+                        "xd148xrd": ["p85r42xn", {"4qyd3p6q": [16, 16]}], // Half%
+                        "ndxe00rk": [null, [8, Infinity]]}; // Pride%
+        let isMC = (run.game == "j1npme6p");
+        let versionVar = (isMC ? "jlzkwql2" : "j846z5wl");
+        if (!(versionVar in run.values))
+          return `<div title="Version is blank"><mark class="${mode}">F</mark></div>`;
+        let versionStr = var_map[run.values[versionVar]];
+        let isVersion = /^((1\.\d\d?(\.\d\d?)?)|(15w14a)|(20w14∞))$/;
+        if (!isVersion.test(versionStr))
+          return `<div title="Version does not match pattern"><mark class="${mode}">F</mark></div>`;
+        let isSpecial;
+        if (versionStr.includes(".")) {
+          isSpecial = false;
+          let splitVersion = versionStr.split(".");
+          var major = parseInt(splitVersion[1]);
+        } else
+          isSpecial = true;
+        if (!(run.category.data.id in ranges))
+          return "";
+        let versionRangeVar = ranges[run.category.data.id];
+        if (versionRangeVar[0] === null) {
+          if (versionRangeVar[1] === null)
+            return (versionStr == versionRangeVar[2]) ? "" : `<div title="Version is not ${versionRangeVar[2]}"><mark class="${mode}">F</mark></div>`;
+          let reqRange = versionRangeVar[1];
+          if (isSpecial)
+            return `<div title="Version is not a full release"><mark class="${mode}">F</mark></div>`;
+          if (major >= reqRange[0] && major <= reqRange[1])
+            return "";
+          if (reqRange[1] === Infinity)
+            return `<div title="Version is not 1.${reqRange[0]} or above"><mark class="${mode}">F</mark></div>`;
+          else
+            return `<div title="Version is not between 1.${reqRange[0]} and 1.${reqRange[1]}"><mark class="${mode}">F</mark></div>`;
+        } else {
+          if (!(versionRangeVar[0] in run.values))
+            return "";
+          let subcatVersion = run.values[versionRangeVar[0]];
+          if (!(subcatVersion in versionRangeVar[1]))
+            return "";
+          let reqRange = versionRangeVar[1][subcatVersion];
+          if (isSpecial)
+            return `<div title="Version is not a full release"><mark class="${mode}">F</mark></div>`;
+          if (major >= reqRange[0] && major <= reqRange[1])
+            return "";
+          if (reqRange[1] === Infinity)
+            return `<div title="Version is not 1.${reqRange[0]} or above"><mark class="${mode}">F</mark></div>`;
+          else
+            return `<div title="Version is not between 1.${reqRange[0]} and 1.${reqRange[1]}"><mark class="${mode}">F</mark></div>`;
+        }
+      }
+      
+      function player_vid_hash(run) {
+        let rplayers = run.players.data.map(p => (p.rel == "user") ? p.names.international : p.name);
+        rplayers.sort();
+        let h = "$" + rplayers.join("|") + "$";
+        if (run.videos === null)
+          h += "NULL$";
+        else {
+          if ("text" in run.videos)
+            h += run.videos.text + "$";
+          if ("links" in run.videos) {
+            let rvideos = run.videos.links.map(x => x.uri);
+            rvideos.sort();
+            h += rvideos.join("|") + "$";
+          }
+        }
+        return h;
+      }
+      
+      function subsurf_flag(run) {
+        let h = player_vid_hash(run);
+        if (h in subsurf_dup_map)
+          return `<div title="Duplicate of ${subsurf_dup_map[h]}"><mark class="${mode}">D</mark></div>`;
+        else
+          subsurf_dup_map[h] = run.id;
+        if (run.videos === null)
+          return `<div title="No video"><mark class="${mode}">N</mark></div>`;
+        if ("text" in run.videos && run.videos.text.includes("tiktok"))
+          return `<div title="Tiktok video"><mark class="${mode}">T</mark></div>`;
+        if ("links" in run.videos && run.videos.links.some(x => x.uri.includes("tiktok")))
+          return `<div title="Tiktok video"><mark class="${mode}">T</mark></div>`;
+        return "";
+      }
+
+      const fMap = {"o1y9j9v6": [celeste_flag, "time is not a multiple of 0.017"],
+                    "j1npme6p": [mc_mcce_flag, "version is invalid in some way"],
+                    "nd2e9erd": [mc_mcce_flag, "version is invalid in some way"],
+                    "y65797de": [subsurf_flag, "duplicate (D), no video (N), Tiktok video (T)"]};
+
+      function get_flag() {
+        if (gameID == "y65797de")
+          subsurf_dup_map = {};
+        if (gameID in fMap)
+          return fMap[gameID][0];
+        else
+          return default_flag;
+      }
+
+      function disp_error(msg) {
+        document.getElementById("category-error").innerHTML = msg;
+        document.getElementById("game-title").innerHTML = "";
+        document.getElementById("queue-table").innerHTML = "";
+      }
+
+      async function get_queue() {
+        let abbr = document.getElementById("abbreviation").value;
+        try {
+          var gameObj = await json_from_src_await(`games/${abbr}`);
+        }
+        catch (code) {
+          let errorMsg;
+          if (code == 404) {
+            errorMsg = `Invalid game: ${escape(abbr)}`;
+          } else if (code >= 400) {
+            errorMsg = `Speedrun.com server error (${code})`;
+          } else {
+            errorMsg = "Unknown error";
+          }
+          disp_error(errorMsg);
+          return;
+        }
+        gameID = gameObj.data.id;
+        gameName = gameObj.data.names.international;
+        try {
+          queue = await continual_data_await_fast_reverse(`runs?game=${await gameID}&status=new&embed=category,level,players`, 5000);
+        }
+        catch (code) {
+          let errorMsg;
+          if (code >= 400) {
+            errorMsg = `Speedrun.com server error (${code})`;
+          } else if (code == -1) {
+            errorMsg = `Queue for ${gameName} has more than 20000 runs. Could not fetch the entire queue.`;
+          } else {
+            errorMsg = "Unknown error";
+          }
+          disp_error(errorMsg);
+          return;
+        }
+        queue.sort((a, b) => ((a.date != b.date) ? ((a.date > b.date) - 0.5) : 0));
+        queue.sort((a, b) => ((a.submitted != b.submitted) ? ((a.submitted > b.submitted) - 0.5) : 0));
+        working_queue = queue;
+        try {
+          var varObj = await json_from_src_await(`games/${gameID}/variables`);
+        }
+        catch (code) {
+          let errorMsg;
+          if (code >= 400) {
+            errorMsg = `Speedrun.com server error (${code})`;
+          } else {
+            errorMsg = "Unknown error";
+          }
+          disp_error(errorMsg);
+          return;
+        }
+        var_map = {};
+        subcat_map = {};
+        for (let variable of varObj.data) {
+          var_map[variable.id] = variable.name;
+          for (let value in variable.values.values) {
+            var_map[value] = variable.values.values[value].label;
+            if (variable["is-subcategory"])
+              subcat_map[value] = variable.values.values[value].label;
+          }
+        }
+        let all_cats = [];
+        for (let run of queue) {
+          let full_cat = full_category(run);
+          if (!all_cats.includes(full_cat))
+            all_cats.push(full_cat);
+        }
+        all_cats.sort((a, b) => ((a > b) - 0.5));
+        all_cats.unshift("All Categories");
+        let cat_select = `<select name="category-select" id="category-select" class="${mode}" multiple=true size=5>`;
+        for (let cat of all_cats)
+          cat_select += `<option value="${cat}" ${cat === "All Categories" ? "selected=true" : ""}>${cat}</option>`;
+        cat_select += `</select>`
+        document.getElementById("category-error").innerHTML = cat_select;
+        edit_working_queue();
+      }
+
+      function full_category(run) {
+        let subcatvals = [];
+        for (let value of Object.values(run.values)) {
+          if (value in subcat_map)
+            subcatvals.push(subcat_map[value]);
+        }
+        let main;
+        if (run.level.data.length === 0)
+          main = run.category.data.name;
+        else {
+          main = run.level.data.name;
+          subcatvals.unshift(run.category.data.name);
+        }
+        return ((subcatvals.length > 0) ? `${main} - ${subcatvals.join(", ")}` : main);
+      }
+
+      function players(run) {
+        return run.players.data.map(get_display_name).join("<br>");
+      }
+
+      function str_time(time) {
+        let milli = Math.round(time * 1000);
+        let hours = (Math.floor(milli / 3600000)).toString();
+        let minutes = (Math.floor((milli % 3600000) / 60000)).toString();
+        let seconds = (Math.floor((milli % 60000) / 1000)).toString();
+        let milliseconds = (milli % 1000).toString();
+        if (hours != "0") {
+          if (milliseconds != "0")
+            return `${hours}:${minutes.padStart(2, "0")}:${seconds.padStart(2, "0")}.${milliseconds.padStart(3, "0")}`;
+          else
+            return `${hours}:${minutes.padStart(2, "0")}:${seconds.padStart(2, "0")}`
+        } else if (minutes != "0") {
+          if (milliseconds != "0")
+            return `${minutes}:${seconds.padStart(2, "0")}.${milliseconds.padStart(3, "0")}`;
+          else
+            return `${minutes}:${seconds.padStart(2, "0")}`;
+        } else if (seconds != "0") {
+          if (milliseconds != "0")
+            return `${seconds}.${milliseconds.padStart(3, "0")}`;
+          else
+            return `0:${seconds.padStart(2, "0")}`;
+        } else
+          return `0.${milliseconds.padStart(3, "0")}`;
+      }
+
+      function primary_time(run) {
+        return str_time(run.times.primary_t);
+      }
+
+      function edit_working_queue() {
+        selected = Array.from(document.getElementById("category-select").querySelectorAll("option:checked"), el => el.value);
+        let title;
+        if (selected.includes("All Categories")) {
+          working_queue = [...Array(queue.length).keys()];
+          title = `<b>${gameName}\n${working_queue.length} run${(working_queue.length != 1) ? "s" : ""}`;
+        } else {
+          working_queue = [];
+          let i = 0;
+          for (let run of queue) {
+            if (selected.includes(full_category(run)))
+              working_queue.push(i);
+            i++;
+          }
+          abbr_cats = selected
+          if (abbr_cats.length > 4) {
+            abbr_cats = abbr_cats.slice(1, 4) + "..."
+          }
+          title = `<b>${gameName}\n${abbr_cats}\n${working_queue.length} run${(working_queue.length != 1) ? "s" : ""}`;
+        }
+        if (working_queue.length > 0) {
+          let total = 0;
+          for (let i of working_queue)
+            total += queue[i].times.primary_t;
+          title += `\nTotal time ${str_time(total)}, average ${str_time(total / working_queue.length)}`;
+        }
+        title += "</b>";
+        if (gameID in fMap)
+          title += `\nThis game supports flagging. Runs will be flagged if: ${fMap[gameID][1]}`;
+        let flag_func = get_flag();
+        let output = "";
+        for (let i of working_queue) {
+          let run = queue[i];
+          output += `<tr><td style="text-align:center">${full_category(run)}</td><td></td>` +
+                    `<td style="text-align:center">${players(run)}</td><td></td>` +
+                    `<td style="text-align:center">${primary_time(run)}</td><td></td>` +
+                    // `<td style="text-align:center">${run.submitted}</td><td></td>` +
+                    `<td style="text-align:center">${run.date}</td><td></td>` +
+                    `<td style="text-align:center"><a href="${run.weblink.replace("http://", "https://")}" target="_blank" class="external">Open</a></td><td></td>` +
+                    `<td id="flag-${run.id}">${flag_func(run)}</td></tr><tr></tr>`;
+        }
+        document.getElementById("game-title").innerHTML = title;
+        document.getElementById("queue-table").innerHTML = output;
+      }
+      
+      const COLOR_MAP = {"#EE2222": "#E44141",  // red
+                         "#E77471": "#C86462",  // coral
+                         "#EF8239": "#D37339",  // orange
+                         "#DAA520": "#B4902E",  // yellow
+                         "#7AB941": "#70A342",  // green
+                         "#009856": "#08AB6E",  // mint
+                         "#249BCE": "#389BC6",  // azure
+                         "#4646CE": "#6666EE",  // blue
+                         "#900090": "#A010A0",  // purple
+                         "#A259C5": "#AE6CCD",  // lavender
+                         "#E762B5": "#C75C9F",  // pink
+                         "#EF2081": "#EE2D88",  // fuchsia
+                         "#FFB3F3": "#AF7BA7",  // light pink
+                         "#808080": "#999999",  // silver
+                         "#000000": "#999999"}; // white
+
+      function hex(num) {
+        return Math.round(Math.max(0, Math.min(255, num))).toString(16);
+      }
+
+      function splitRGB(rgb) {
+        return rgb.match(/.{1,2}/g).map(x => parseInt(x, 16));
+      }
+
+      function joinRGB(rgb) {
+        return rgb.map(x => hex(x).padStart(2, "0")).join("");
+      }
+
+      function gradient(start, end, len) {
+        let colors = [];
+        let splitStart = splitRGB(start);
+        let splitEnd = splitRGB(end);
+        for (let i = 0; i < len; i++) {
+          let weight = (len == 1) ? 0 : (i / (len - 1));
+          colors.push(joinRGB(splitStart.map((e, i) => (e * (1 - weight) + splitEnd[i] * weight))));
+        }
+        return colors;
+      }
+      
+      function escape(str) {
+        if (str === null)
+          return "null";
+        else if (str === undefined)
+          return "undefined";
+        else
+          return str.replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;");
+      }
+      
+      function get_display_name(user, flag=true, link=false) {
+        if (!("rel" in user) || user.rel == "user") {
+          let name_style = user["name-style"];
+          let user_name = user.names.international;
+          let user_loc = user.location;
+          if (name_style.style == "gradient") {
+            let startL = name_style["color-from"].light;
+            let endL = name_style["color-to"].light;
+            let startD = name_style["color-from"].dark;
+            let endD = name_style["color-to"].dark;
+            let name_gradientL = gradient((startL in COLOR_MAP ? COLOR_MAP[startL] : startL).slice(1),
+                                          (endL in COLOR_MAP ? COLOR_MAP[endL] : endL).slice(1), user_name.length);
+            let name_gradientD = gradient(startD.slice(1), endD.slice(1), user_name.length);
+            var display_name = `<span class="xlight ${mode}">` +
+                                 name_gradientL.map((c, i) => `<span style="color:#${c}">${escape(user_name[i])}</span>`).join("") +
+                               `</span>` +
+                               `<span class="xdark ${mode}">` +
+                                 name_gradientD.map((c, i) => `<span style="color:#${c}">${escape(user_name[i])}</span>`).join("") +
+                               `</span>`;
+          } else if (name_style.style == "solid") {
+            let colorL = name_style.color.light;
+            let colorD = name_style.color.dark;
+            var display_name = `<span style="color:${colorL in COLOR_MAP ? COLOR_MAP[colorL] : colorL}" class="xlight ${mode}">` +
+                                 escape(user_name) +
+                               `</span>` +
+                               `<span style="color:${colorD}" class="xdark ${mode}">` +
+                                 escape(user_name) +
+                               `</span>`;
+          } else {
+            var display_name = `<span>${escape(user_name)}</span>`;
+          }
+          display_name = `<b>${display_name}</b>`;
+          if ((user_loc !== null) && ("country" in user_loc)) {
+            let cc = user_loc.country.code;
+            display_name = `<span style="white-space:nowrap">` +
+                             `<img src="https://www.speedrun.com/images/flags/${cc}.png" height="12" alt="[${cc}]"> ` +
+                             display_name +
+                           `</span>`;
+          }
+          return display_name;
+        } else if (user.rel == "guest") {
+          let split_name = user.name.match(/^\[(.*)\](.*)/);
+          if (split_name) {
+            let name = escape(split_name[2]);
+            return `<span style="white-space:nowrap">` +
+                     `<img src="https://www.speedrun.com/images/flags/${split_name[1]}.png" height="12" onerror="this.outerHTML = this.alt" ` +
+                      `alt="[${split_name[1]}]"> ` +
+                   `${name}</span>`;
+          } else {
+            return escape(user.name);
+          }
+        } else if ("name" in user) {
+          return escape(user.name);
+        } else {
+          return "?";
+        }
+      }
+    </script>
+  </head>
+  <body style="font-family:sans-serif" class="dark">
+    <h1 style="text-align:center">QueueClient</h1>
+    <div id="header" style="text-align:center">
+      <span class="xlight dark"><button class="link" onclick="dark()">Dark Mode</button></span>
+      <span class="xdark dark"><button class="link" onclick="light()">Light Mode</button></span> &bull;
+      <a href="https://github.com/Minecraft-Java-Edition-Speedrunning/mcsr-site" target="_blank" class="external">Source</a>
+      <p>Originally created by randomidiot13</p>
+    </div>
+    <div id="prompt" style="text-align:center">
+      <p>Enter the abbreviation for the game you wish to fetch the queue of:</p>
+      <p>
+        <input type="text" name="abbreviation" id="abbreviation" class="dark" size="30"/>
+        <button onclick="get_queue()" class="dark">Fetch Queue</button>
+        <button onclick="edit_working_queue()" class="${mode} dark">Apply</button>
+      </p>
+    </div>
+    <div id="pre-table" style="text-align:center">
+      <p id="category-error"></p>
+      <p style="white-space:pre" id="game-title"></p>
+    </div>
+    <table id="queue-table" style="margin-left:auto;margin-right:auto"></table>
+  </body>
+</html>
