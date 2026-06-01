@@ -160,8 +160,13 @@ hr {
     padding: 3px;
 }
 
+a:hover {
+    text-decoration: underline;
+}
+
 a {
     color: var(--link);
+    text-decoration: none;
 }
 
 summary>span:not(.name-align) {
