@@ -19,9 +19,9 @@
       <!--   border: 1px solid; -->
       <!--   border-radius: 3px; -->
       <!-- } -->
-      <!-- .xlight.dark, .xdark.light { -->
-      <!--   display: none -->
-      <!-- } -->
+      .xlight.dark, .xdark.light {
+        display: none
+      }
       <!-- a:link { -->
       <!--   color: #08e -->
       <!-- } -->
@@ -312,7 +312,7 @@
       }
 
       async function get_queue() {
-        let abbr = document.getElementById("abbreviation").value;
+        let abbr = window.location.hash.substring(1);
         try {
           var gameObj = await json_from_src_await(`games/${abbr}`);
         }
@@ -586,6 +586,22 @@
           return "?";
         }
       }
+
+      function user_get_queue(){
+        window.location.hash = document.getElementById("abbreviation").value;
+      }
+      
+      window.onhashchange = () => {
+        document.getElementById("abbreviation").value = window.location.hash.substring(1);
+        get_queue();
+      }
+      
+      window.onload = (event) => {
+        if(window.location.hash.length > 0){
+          document.getElementById("abbreviation").value = window.location.hash.substring(1);
+          get_queue();
+        }
+      }
     </script>
   </head>
   <body style="font-family:sans-serif" class="dark">
@@ -598,11 +614,11 @@
     </div>
     <div id="prompt" style="text-align:center">
       <p>Enter the abbreviation for the game you wish to fetch the queue of:</p>
-      <p>
+      <form action="javascript:user_get_queue()">
         <input type="text" name="abbreviation" id="abbreviation" class="dark" size="30"/>
-        <button onclick="get_queue()" class="dark">Fetch Queue</button>
-        <button onclick="edit_working_queue()" class="${mode} dark">Apply</button>
-      </p>
+        <input type="submit" class="light" value="Fetch Queue"/>
+        <input type="button" onclick="edit_working_queue()" class="${mode} dark" value="Apply">
+      </form>
     </div>
     <div id="pre-table" style="text-align:center">
       <p id="category-error"></p>
