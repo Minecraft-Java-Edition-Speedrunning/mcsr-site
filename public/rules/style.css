@@ -4,13 +4,13 @@
 }
 
 :root {
-  --bg:#0d1015;
-  --panel:#060b18;
-  --accent:#93c5fd;
-  --accent-2:#6ee7b7;
-  --muted:#9aa4b2;
-  --paper:#0f1724;
-  --radius:8px;
+  --bg: black;
+  --panel: #060b18;
+  --accent: #a0c4ff;
+  --accent-2: #6ee7b7;
+  --muted: #9aa4b2;
+  --paper: #0f1724;
+  --radius: 8px;
   color-scheme: dark;
 }
 
