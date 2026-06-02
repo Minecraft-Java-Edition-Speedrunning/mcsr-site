@@ -1,0 +1,25 @@
+a {
+    color: #a0c4ff;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+body {
+    color: white;
+    background: black;
+    font-family: sans-serif;
+}
+
+p {
+    margin: 0;
+    margin-top: inherit;
+}
+
+ul {
+    margin-top: 0;
+    padding-left: 20px;
+    list-style-type: disc;
+}

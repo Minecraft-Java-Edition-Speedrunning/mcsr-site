@@ -183,6 +183,10 @@ input:is([type="checkbox"], [type="radio"])+label::before {
     white-space: nowrap;
 }
 
+input:is([type="checkbox"], [type="radio"])+label:hover {
+    cursor: pointer;
+}
+
 .options input:is([type="checkbox"], [type="radio"])+label::before {
     padding-right: 10px;
 }
