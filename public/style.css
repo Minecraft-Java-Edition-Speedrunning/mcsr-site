@@ -1,5 +1,9 @@
+:root {
+  color-scheme: dark light;
+}
+
 a {
-    color: skyblue /* #a0c4ff */;
+    color: light-dark(blue, skyblue) /* or #a0c4ff */;
     text-decoration: none;
 }
 
@@ -8,18 +12,29 @@ a:hover {
 }
 
 body {
-    color: white;
-    background: black;
     font-family: sans-serif;
+    margin: 20px;
 }
 
-p {
+.icon {
+    display: block; /* stop link from expanding a bit below image */
+}
+
+header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+h1, p, ul {
     margin: 0;
-    margin-top: inherit;
 }
 
 ul {
-    margin-top: 0;
     padding-left: 20px;
     list-style-type: disc;
 }
+
+/* h1 {
+    font-weight: 600;
+} */
