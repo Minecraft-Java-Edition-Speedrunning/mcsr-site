@@ -4,7 +4,7 @@
 }
 
 :root {
-  --bg: black;
+  --bg: canvas;
   --panel: #060b18;
   --accent: #a0c4ff;
   --accent-2: #6ee7b7;
@@ -58,6 +58,10 @@ body {
     display:flex;
     align-items:center;
     gap:12px;
+}
+
+.brand-icon {
+    display: block;
 }
 
 h1 {
