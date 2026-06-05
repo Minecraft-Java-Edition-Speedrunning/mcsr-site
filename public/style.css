@@ -12,7 +12,7 @@ a:hover {
 }
 
 body {
-    font-family: sans-serif;
+    font-family: "DejaVu Sans";
     margin: 20px;
     background-color: light-dark(lavender, canvas);
 }
