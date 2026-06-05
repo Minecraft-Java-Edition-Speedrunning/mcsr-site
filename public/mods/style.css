@@ -150,8 +150,7 @@ body {
     background-color: var(--background);
     color: snow;
     max-width: 1000px;
-    margin-left: 20px;
-    margin-right: 20px;
+    margin: 20px;
 }
 
 hr {
