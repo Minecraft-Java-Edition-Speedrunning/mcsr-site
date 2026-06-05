@@ -26,6 +26,14 @@
       body, p {
         margin: 10px;
       }
+      a {
+        color: light-dark(blue, skyblue);
+        text-decoration: none;
+        
+      }
+      a:hover {
+        text-decoration: underline;
+      }
       <!-- a:link { -->
       <!--   color: #08e -->
       <!-- } -->
@@ -33,8 +41,11 @@
       <!--   color: #af69ef -->
       <!-- } -->
       .external:after {
-        content: url(https://upload.wikimedia.org/wikipedia/commons/4/44/Icon_External_Link.svg);
+        content: url("/images/external.svg");
         margin: 0 0 0 3px;
+      }
+      select {
+        width: 430px;
       }
       button.link {
         background: none!important;
