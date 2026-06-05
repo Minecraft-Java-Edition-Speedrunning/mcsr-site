@@ -94,7 +94,8 @@ summary {
     --link: rgb(79, 156, 255);
     /* --link: #bb86fc; */
     --checkbox: #bb86fc;
-    --background: #16181c;
+    --background: canvas;
+    color-scheme: dark;
 }
 
 summary::before {

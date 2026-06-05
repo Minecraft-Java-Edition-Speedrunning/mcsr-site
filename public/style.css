@@ -14,7 +14,7 @@ a:hover {
 body {
     font-family: sans-serif;
     margin: 20px;
-    background: light-dark(lavender, canvas);
+    background-color: light-dark(lavender, canvas);
 }
 
 .icon {
