@@ -91,7 +91,7 @@ summary {
 
 :root {
     --symbol: ">";
-    --link: rgb(79, 156, 255);
+    --link: skyblue;
     /* --link: #bb86fc; */
     --checkbox: #bb86fc;
     --background: canvas;
