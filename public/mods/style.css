@@ -256,11 +256,12 @@ input[type="checkbox"].override-incompatible+label::before {
 }
 
 #version-dropdown {
-    border: 1px solid snow;
     max-width: 130px;
     width: 95%;
+    /* border: 1px solid snow;
     color: snow;
     background-color: var(--background);
     padding: 5px;
     border-radius: 3px;
+    */
 }
