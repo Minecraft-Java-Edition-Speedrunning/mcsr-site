@@ -34,6 +34,7 @@ h1, p, ul {
 ul {
     padding-left: 20px;
     list-style-type: disc;
+    line-height: 1.25em;
 }
 
 h1 {
