@@ -141,7 +141,7 @@ input+label::before {
 }
 
 body {
-    font-family: "Noto Sans";
+    font-family: "DejaVu Sans";
     background-color: var(--background);
     color: snow;
     max-width: 1000px;
