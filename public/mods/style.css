@@ -265,6 +265,7 @@ input[type="checkbox"].override-incompatible+label::before {
 
 h1 {
     font-size: 44px;
+    font-weight: normal;
 }
 
 .mojangles {

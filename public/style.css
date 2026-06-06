@@ -43,6 +43,7 @@ ul {
 
 h1 {
     font-size: 44px;
+    font-weight: normal;
 }
 
 .mojangles {
@@ -51,6 +52,6 @@ h1 {
 
 @media (prefers-color-scheme: dark) {
     .mojangles {
-        text-shadow: .1em .1em 0 rgb(from currentcolor calc(r * 0.25) calc(g * 0.25) calc(b * 0.25));
+        text-shadow: 0.1em 0.1em 0 rgb(from currentcolor calc(r * 0.25) calc(g * 0.25) calc(b * 0.25));
     }
 }
