@@ -20,9 +20,8 @@ body {
     color: light-dark(#222, snow);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    padding: 28px;
+    margin: 20px;
     display: flex;
-    justify-content: center;
     align-items: flex-start;
     background-color: light-dark(lavender, canvas);
 }
@@ -30,26 +29,6 @@ body {
 .page {
     width: 100%;
     max-width: 1000px;
-    display: grid;
-    grid-template-columns: 1fr;
-    /* gap:20px; */
-}
-
-.site-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 16px;
-    padding: 12px;
-    /* border-radius:8px; */
-    /* background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent); */
-    /* border: 1px solid rgba(255,255,255,0.5); */
-}
-
-.brand {
-    display: flex;
-    align-items: center;
-    gap: 12px;
 }
 
 .icon {
@@ -80,15 +59,7 @@ a:hover {
     font-weight: bold;
 }
 
-.content-area {
-    padding: 12px;
-    /* border-radius: 8px; */
-    /* background: linear-gradient(180deg, rgba(255,255,255,0.02), transparent); */
-    /* border: 1px solid rgba(255,255,255,0.5); */
-}
-
 .current-line {
-    margin-bottom: 20px;
     font-size: 16pt;
 }
 
@@ -102,7 +73,6 @@ a:hover {
 }
 
 .releases li {
-    /* background: linear-gradient(180deg, rgba(255,255,255,0.02), transparent); */
     padding: 10px;
     border-radius: 6px;
     border: 1px solid light-dark(rgba(0, 0, 0, 0.5), rgba(255, 255, 255, 0.25));
@@ -147,10 +117,10 @@ a:hover {
     font-size: 15px;
 }
 
-.brand {
+header {
     display: flex;
     align-items: center;
-    gap: 12px; 
+    gap: 10px; 
 }
 
 @media (max-width:640px) {
