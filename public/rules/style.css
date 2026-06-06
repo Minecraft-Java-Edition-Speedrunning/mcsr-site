@@ -1,4 +1,4 @@
-@import "/vendor/dejavu.css";
+@import "/vendor/sora.css";
 @import "/vendor/mojangles.css";
 
 :root {
@@ -16,7 +16,7 @@ html, body {
 
 body {
     margin: 0;
-    font-family: "DejaVu Sans";
+    font-family: "Sora";
     color: light-dark(#222, snow);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
