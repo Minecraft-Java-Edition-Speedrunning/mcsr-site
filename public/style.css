@@ -18,7 +18,8 @@ body {
 }
 
 .icon {
-    display: block; /* stop link from expanding a bit below image */
+    /* stop link from expanding a bit below image */
+    display: block;
 }
 
 header {
@@ -35,8 +36,4 @@ ul {
     padding-left: 20px;
     list-style-type: disc;
     line-height: 1.25em;
-}
-
-h1 {
-    font-weight: 600;
 }

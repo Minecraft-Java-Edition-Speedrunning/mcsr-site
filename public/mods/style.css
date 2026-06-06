@@ -8,13 +8,7 @@ a.external-pdf {
     padding-right: 20px;
 }
 
-@font-face {
-    font-family: Inter;
-    src: url("/vendor/inter.woff2");
-}
-
-h1,
-p {
+h1, p {
     margin: auto;
 }
 
@@ -147,7 +141,7 @@ input+label::before {
 }
 
 body {
-    font-family: "DejaVu Sans", Inter;
+    font-family: "Noto Sans";
     background-color: var(--background);
     color: snow;
     max-width: 1000px;
@@ -236,8 +230,7 @@ input[type="checkbox"].override-incompatible+label::before {
     content: ""
 }
 
-#accessibility-warning,
-#optifine-warning {
+#accessibility-warning, #optifine-warning {
     position: absolute;
     top: 300px;
     border: 1px solid snow;
