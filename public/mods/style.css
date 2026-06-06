@@ -1,3 +1,6 @@
+@import "/vendor/dejavu.css";
+@import "/vendor/mojangles.css";
+
 /* a:not(.button) {
     background: url("/images/external.svg") center right no-repeat;
     padding-right: 14px;
@@ -50,6 +53,7 @@ a.button-link:hover {
 
 .options p {
     padding-bottom: 5px;
+    font-weight: bold;
 }
 
 .options input {
@@ -257,4 +261,13 @@ input[type="checkbox"].override-incompatible+label::before {
     padding: 5px;
     border-radius: 3px;
     */
+}
+
+h1 {
+    font-size: 44px;
+}
+
+.mojangles {
+    font-family: Mojangles;
+    text-shadow: .1em .1em 0 rgb(from currentcolor calc(r * 0.25) calc(g * 0.25) calc(b * 0.25));
 }

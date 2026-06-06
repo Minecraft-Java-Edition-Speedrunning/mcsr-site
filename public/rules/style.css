@@ -1,3 +1,6 @@
+@import "/vendor/dejavu.css";
+@import "/vendor/mojangles.css";
+
 :root {
     --muted: light-dark(#3c3f45, #9aa4b2);
     color-scheme: dark light;
@@ -37,7 +40,7 @@ body {
     align-items: center;
     justify-content: space-between;
     gap: 16px;
-    padding: 12px 16px;
+    padding: 12px;
     /* border-radius:8px; */
     /* background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent); */
     /* border: 1px solid rgba(255,255,255,0.5); */
@@ -49,12 +52,12 @@ body {
     gap: 12px;
 }
 
-.brand-icon {
+.icon {
     display: block;
 }
 
 h1 {
-    font-size: 18px;
+    font-size: 44px;
     margin: 0;
 }
 
@@ -65,7 +68,7 @@ h1 {
 }
 
 a {
-    color: light-dark(blue, skyblue);
+    color: light-dark(#000080, skyblue);
     text-decoration: none;
 }
 
@@ -153,5 +156,15 @@ a:hover {
 @media (max-width:640px) {
     .releases {
         grid-template-columns: 1fr;
+    }
+}
+
+.mojangles {
+    font-family: Mojangles;
+}
+
+@media (prefers-color-scheme: dark) {
+    .mojangles {
+        text-shadow: .1em .1em 0 rgb(from currentcolor calc(r * 0.25) calc(g * 0.25) calc(b * 0.25));
     }
 }

@@ -1,9 +1,12 @@
+@import "/vendor/dejavu.css";
+@import "/vendor/mojangles.css";
+
 :root {
   color-scheme: dark light;
 }
 
 a {
-    color: light-dark(blue, skyblue) /* or #a0c4ff */;
+    color: light-dark(#000080, skyblue) /* or #a0c4ff */;
     text-decoration: none;
 }
 
@@ -36,4 +39,18 @@ ul {
     padding-left: 20px;
     list-style-type: disc;
     line-height: 1.25em;
+}
+
+h1 {
+    font-size: 44px;
+}
+
+.mojangles {
+    font-family: Mojangles;
+}
+
+@media (prefers-color-scheme: dark) {
+    .mojangles {
+        text-shadow: .1em .1em 0 rgb(from currentcolor calc(r * 0.25) calc(g * 0.25) calc(b * 0.25));
+    }
 }
