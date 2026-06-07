@@ -16,6 +16,7 @@ a:hover {
 
 body {
     font-family: "Sora";
+    letter-spacing: -0.01em;
     margin: 20px;
     background-color: light-dark(lavender, canvas);
 }
@@ -31,8 +32,9 @@ header {
     gap: 10px;
 }
 
-h1, p, ul {
+h1, h2, p, ul {
     margin: 0;
+    font-weight: normal;
 }
 
 ul {
@@ -41,13 +43,21 @@ ul {
     line-height: 1.25em;
 }
 
+code {
+    font-size: 15px;
+}
+
 h1 {
     font-size: 44px;
-    font-weight: normal;
+}
+
+h2 {
+    font-size: 32px;
 }
 
 .mojangles {
     font-family: Mojangles;
+    letter-spacing: initial;
 }
 
 @media (prefers-color-scheme: dark) {
