@@ -32,7 +32,7 @@ header {
     gap: 10px;
 }
 
-h1, h2, p, ul {
+h1, h2, p, ul, figure {
     margin: 0;
     font-weight: normal;
 }
