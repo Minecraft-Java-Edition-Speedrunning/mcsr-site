@@ -19,6 +19,7 @@ body {
     letter-spacing: -0.01em;
     margin: 20px;
     background-color: light-dark(lavender, canvas);
+    max-width: 960px;
 }
 
 .icon {
