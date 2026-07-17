@@ -725,7 +725,7 @@ function generateModpack(config, loader, versions) {
                     sha512: it.sha512
                 },
                 downloads: [it.url],
-                fileSize: it.fileSize
+                fileSize: it.size
             }
         })
     }
