@@ -660,7 +660,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         fetch("https://meta.fabricmc.net/v2/versions/loader")
             .then(res => res.json())
-            .then(data => generateModpack(config, data[0].version, versions))
+            .then(data => generateModpack(config, "0.19.3", versions))
             .catch(() => alert("Could not get Fabric Loader version"))
     })
 
