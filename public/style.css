@@ -61,6 +61,16 @@ h2 {
     letter-spacing: initial;
 }
 
+.mcchat {
+    font-family: Mojangles;
+    letter-spacing: initial;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: #ffffff;
+    text-shadow: 0.1em 0.1em 0 rgb(from currentcolor calc(r * 0.25) calc(g * 0.25) calc(b * 0.25));
+    padding: 0.5em;
+    max-width: 50%;
+}
+
 @media (prefers-color-scheme: dark) {
     .mojangles {
         text-shadow: 0.1em 0.1em 0 rgb(from currentcolor calc(r * 0.25) calc(g * 0.25) calc(b * 0.25));
