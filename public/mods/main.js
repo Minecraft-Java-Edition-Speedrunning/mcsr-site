@@ -107,7 +107,7 @@ function checkRules(mod, config) {
 }
 
 /**
- * 
+ *
  * @param {*} mod the mod to search
  * @param {*} version the minecraft version compatibility is requested for
  * @returns the modVersion that includes the target version, or null
@@ -433,7 +433,7 @@ function updateState() {
 
     const incompatibilities = {}
     // uncommended parts -> if uncommended, it will mark as incompatible mods that are incompatible with dependencies of selected mods,
-    // even those dependencies are manually deselected 
+    // even those dependencies are manually deselected
     for (const checkbox of checkboxes /* .filter(it => !it.classList.contains("auto-dependency")) */) {
         const modid = modidFromCheckbox(checkbox)
         const deps = getDependencies(modid)
@@ -496,7 +496,7 @@ function getTitleText(incompatibilities, missingRequired, requiredBy, classes) {
 
 /**
  * Gets the config represented by the current state of the website
- * @returns null if version is invalid, else object with fields version, macos, 
+ * @returns null if version is invalid, else object with fields version, macos,
  */
 function getConfig() {
     const dropdown = document.querySelector("#version-dropdown")
@@ -582,8 +582,8 @@ document.addEventListener("DOMContentLoaded", () => {
     textbox.textContent = "Loading mods..."
 
     Promise.all([
-        fetch("https://raw.githubusercontent.com/tildejustin/mcsr-meta/schema-7/mods.json"),
-        fetch("https://raw.githubusercontent.com/tildejustin/mcsr-meta/schema-7/extra.json")
+        fetch("https://meta.mc.sr/mods.json"),
+        fetch("https://meta.mc.sr/extra.json")
     ].map(promise => promise.then(response => {
         if (!response.ok) {
             throw new Error("http error, status: " + response.status)
