@@ -582,8 +582,8 @@ document.addEventListener("DOMContentLoaded", () => {
     textbox.textContent = "Loading mods..."
 
     Promise.all([
-        fetch("https://meta.mc.sr/mods.json"),
-        fetch("https://meta.mc.sr/extra.json")
+        fetch("https://meta.mc.sr/schema-7/mods.json"),
+        fetch("https://meta.mc.sr/schema-7/extra.json")
     ].map(promise => promise.then(response => {
         if (!response.ok) {
             throw new Error("http error, status: " + response.status)
