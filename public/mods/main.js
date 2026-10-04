@@ -511,7 +511,7 @@ function getConfig() {
 
 function handleQueryParameters() {
     const params = new URLSearchParams(window.location.search)
-    const defaultMacOS = navigator.userAgentData?.platform == "macOS"
+    const defaultMacOS = navigator.userAgentData?.platform == "macOS" || navigator.platform.startsWith("Mac");
     let version = params.get("version") ?? "1.16.1"
     if (!versions.includes(version)) version = "1.16.1"
     let category = params.get("category") ?? Category.RANDOM_SEED
