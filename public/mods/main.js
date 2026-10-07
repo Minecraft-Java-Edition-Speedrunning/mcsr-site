@@ -658,9 +658,9 @@ document.addEventListener("DOMContentLoaded", () => {
             return
         }
 
-        fetch("https://meta.fabricmc.net/v2/versions/loader")
+        fetch("https://meta.prismlauncher.org/v1/net.fabricmc.fabric-loader")
             .then(res => res.json())
-            .then(data => generateModpack(config, "0.19.3", versions))
+            .then(data => generateModpack(config, data.versions.find(it => it.recommended).version, versions))
             .catch(() => alert("Could not get Fabric Loader version"))
     })
 
