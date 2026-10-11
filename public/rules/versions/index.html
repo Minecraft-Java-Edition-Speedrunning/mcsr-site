@@ -7,12 +7,22 @@
   <link rel="stylesheet" href="/rules/style.css">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script>
+    const changelogs = {
+      7: "mxl7wz6p",
+      6: "y3g8e9xg",
+      5: "06v9kdxm",
+      4: "mxl4d56p",
+      3: "06qde8xr",
+      2: "06qde8xr",
+      1: "z34oyl68",
+    }
+    const extractVersion = name => name.split(".")[0].split("_").at(-1).substring(1)
     document.addEventListener("DOMContentLoaded", () => {
       document.getElementById("js").remove()
       fetch("https://api.github.com/repos/Minecraft-Java-Edition-Speedrunning/rules/contents/pub/pdf")
         .then(res => {
           if (!res.ok) {
-            document.getElementById("newest").innerText = "github api failed :("
+            document.getElementById("newest").innerText = "GitHub API failed :("
             throw new Error("http error status: " + response.status);
           }
           return res.json();
@@ -22,7 +32,7 @@
             a = a.name; b = b.name;
             b1 = !a.includes("beta"); b2 = !b.includes("beta")
             if (b1 ^ b2) return b2 - b1 // boolean subtraction
-            return b.split(".")[0].split("_").at(-1).substring(1) - a.split(".")[0].split("_").at(-1).substring(1) // string subtraction
+            return extractVersion(b) - extractVersion(a) // string subtraction
           })
           quicklink = document.getElementById("quicklink")
           newest = data[0]
@@ -43,16 +53,15 @@
             // create a list item element
             const li = document.createElement("li");
 
-            if (!ver.name.includes("beta")) {
+            version = extractVersion(ver.name)
+            if (!ver.name.includes("beta") && version in changelogs) {
               // release link and changelog link classes
               li.innerHTML = `<a class="release-link" href="${url}" target="_blank" rel="noopener noreferrer">${ver.name}</a>`
-                <!-- + `<span class="sep"> — </span>` -->
-                + `<a class="changelog-link" href="${changelog}" target="_blank" rel="noopener noreferrer">Changelog</a>`;
+                + `<a class="changelog-link" href="//www.speedrun.com/mc/news/${changelogs[version]}" target="_blank" rel="noopener noreferrer">Changelog</a>`;
             } else {
               // beta releases get .beta class styling
               li.innerHTML = `<a class="release-link" href="${url}" target="_blank" rel="noopener noreferrer">${ver.name}</a>`
-                <!-- + `<span class="sep"> — </span>` -->
-                + `<em class="beta">(beta)</em>`;
+                + (ver.name.includes("beta") ? `<em class="beta">(beta)</em>` : "");
             }
 
             releases.appendChild(li);
