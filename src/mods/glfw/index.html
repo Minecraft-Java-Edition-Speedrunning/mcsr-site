@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GLFW Builds</title>
+    <link rel="stylesheet" href="/style.css">
+    <style>
+        .hash-wrap {
+            white-space: nowrap;
+        }
+
+        .hash {
+            white-space: normal;
+            overflow-wrap: anywhere;
+        }
+
+        body {
+            max-width: initial;
+        }
+
+        .constrain {
+            max-width: 960px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="/"><img src="/favicon.ico" alt="Home" class="icon" width="38" height="38"></a>
+        <h1 class="mojangles">GLFW Builds</h1>
+    </header>
+    <br>
+    <p class="constrain">
+        These are the links to all custom GLFW builds tracked in <a href="//github.com/Minecraft-Java-Edition-Speedrunning/legal-builds/blob/main/legal-dlls.csv">legal-builds.csv</a> as per A.8.4.c.
+        Each build includes the SHA512 checksum for checking download integrity.
+        Instructions on how to update GLFW can be found in <a href="//frontcage.com/t/how-to-comply-with-recent-glfw-rule-changes/139">this Frontcage thread</a>.
+    </p>
+    <br></br>
+    <p>
+        r0hkx: waywall patch, x86_64
+        <ul>
+            <li>
+                GLFW 3.4: <a href="//femboy.beauty/c7IHWg">libglfw.so</a><br>
+                <span class="hash-wrap">
+                    checksum: <code class="hash">5aa9dc21354770202efd01180c6925fd9bdbe6f1fdddd0b4c23fd7a65de3c287a96d290862094ecdbff3061c7d3d341b3891ea7ced402d4957247882828c6278</code>
+                </span>
+            </li>
+            <li>
+                GLFW 3.5.1: <a href="//femboy.beauty/z8Q3lg">libglfw.so</a><br>
+                <span class="hash-wrap">
+                    checksum: <code class="hash">9c6f51924ca376ba13936157778de2e7e35be34c69ab904241db32266161f3184974e08daba73eeea91afbab329b23c8e088985845562946e3c015faca9ab036</code>
+                </span>
+            </li>
+        </ul>
+        <br>
+        JamiKettunen: waywall patch
+        <ul>
+            <li>
+                GLFW 3.4 ARM64: <a href="//github.com/JamiKettunen/mcsr-glfw/releases/download/20261019-v3.4/libglfw-arm64.so">libglfw-arm64.so</a><br>
+                <span class="hash-wrap">
+                    checksum: <code class="hash">b611a67bb1b1f73653d4d01de8eb1b8f12b41d7bf4601b2f6927165631b17edc5844f3745b1fc6ce647cb936fe70ef02ea567715ef01ef7df96bd7148f7a6e16</code>
+                </span>
+            </li>
+            <li>
+                GLFW 3.5.1 ARM64: <a href="//github.com/JamiKettunen/mcsr-glfw/releases/download/20261019-v3.5.1/libglfw-arm64.so">libglfw-arm64.so</a><br>
+                <span class="hash-wrap">
+                    checksum: <code class="hash">248bcf2cb96275057823bc6c8ecb53a8ac7b0606ed31a42cc8d5f0c01b53ae64d4fe7e12a8095549796b549375f3bac460a47158cec03b733fca10e72facb656</code>
+                </span>
+            </li>
+            <li>
+                GLFW 3.4 x86_64: <a href="//github.com/JamiKettunen/mcsr-glfw/releases/download/20261019-v3.4/libglfw-x86_64.so">libglfw-x86_64.so</a><br>
+                <span class="hash-wrap">
+                    checksum: <code class="hash">5aa9dc21354770202efd01180c6925fd9bdbe6f1fdddd0b4c23fd7a65de3c287a96d290862094ecdbff3061c7d3d341b3891ea7ced402d4957247882828c6278</code>
+                </span>
+            </li>
+            <li>
+                GLFW 3.5.1 x86_64: <a href="//github.com/JamiKettunen/mcsr-glfw/releases/download/20261019-v3.5.1/libglfw-x86_64.so">libglfw-x86_64.so</a><br>
+                <span class="hash-wrap">
+                    checksum: <code class="hash">9c6f51924ca376ba13936157778de2e7e35be34c69ab904241db32266161f3184974e08daba73eeea91afbab329b23c8e088985845562946e3c015faca9ab036</code>
+                </span>
+            </li>
+        </ul>
+        <br>
+        tesselslate: waywall patch, GLFW 3.4, x86_64, inside package at <code>usr/local/lib64/waywall-glfw</code>
+        <ul>
+            <li>
+                <a href="//github.com/tesselslate/waywall/releases/download/0.2026.10.11/waywall-0.5-1-x86_64.pkg.tar.zst">waywall-0.5-1-x86_64.pkg.tar.zst</a><br>
+                <span class="hash-wrap">
+                    checksum: <code class="hash">4e8bda0d6dae466b0bd6b2062d4638b30ca8b0bbda766e0439d32b6809aa572fa0f6176ecc32b0bc0f55b577e3748c1a52481c6eb386a8cbc96e982bb1ba57fa</code>
+                </span>
+            </li>
+            <li>
+                <a href="//github.com/tesselslate/waywall/releases/download/0.2026.10.11/waywall-0.5-1.fc42.x86_64.rpm">waywall-0.5-1.fc42.rpm</a><br>
+                <span class="hash-wrap">
+                    checksum: <code class="hash">39323274e4ef42f663ab2d4990af13c7a3fde882192156726aa8d26a003df70ecf7c1d5d3ed8b9ab21e7693c0cc2d18f0ab69dc871fad988e3aa070f7f07f8fb</code>
+                </span>
+            </li>
+            <li>
+                <a href="//github.com/tesselslate/waywall/releases/download/0.2026.10.11/waywall_0.5-1_amd64.deb">waywall_0.5-1_amd64.deb</a><br>
+                <span class="hash-wrap">
+                    checksum: <code class="hash">4821ee81c046f87c1dcc4bd7954b96057f5b27584d352b17a2a5f3f4eaf787749cecff5b832e028149880466ed3729f2a42c69aa4f4c799b3a980883c48ec53e</code>
+                </span>
+            </li>
+            <li>
+                <a href="//github.com/tesselslate/waywall/releases/download/0.2026.10.11/waywall-0.5-1-x86_64.pkg.tar.zst">waywall-0.5-1-x86_64.pkg.tar.zst</a><br>
+                <span class="hash-wrap">
+                    checksum: <code class="hash">0791315d097ab5d11392c27329ee01871efb169de1e4c4a8010c6effce59737415ddead09fb19e8bac497c03c66ee7db77a372a29a2ccc6c94b5382bb6028390</code>
+                </span>
+            </li>
+            <li>
+                <a href="//github.com/tesselslate/waywall/releases/download/0.2026.10.11/waywall-0.5-1.fc42.x86_64.rpm">waywall-0.5-1.fc42.rpm</a><br>
+                <span class="hash-wrap">
+                    checksum: <code class="hash">432cc676f6e4b043df2e03ea62cfa710c7b0b8f2e4371d0efb16a3bcf64be3a321d6bf092ae263c992f0e6707f163d16c9588fa463daf6b14277bc1700f5de35</code>
+                </span>
+            </li>
+            <li>
+                <a href="//github.com/tesselslate/waywall/releases/download/0.2026.10.11/waywall_0.5-1_amd64.deb">waywall_0.5-1_amd64.deb</a><br>
+                <span class="hash-wrap">
+                    checksum: <code class="hash">a0fafcbd8562c5be918338656415850ec3f4b1e4ebd1d40452fe52bf04255dfae897544dd3da8e0b81aff2d60316f6b42b13e46097dc66324401969a1fbcf8b9</code>
+                </span>
+            </li>
+        </ul>
+    </p>
+</body>
+</html>

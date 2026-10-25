@@ -1,9 +1,18 @@
 {
   "devDependencies": {
-    "jszip": "^3.10.1",
-    "wrangler": "^4.95.0"
+    "gulp": "^5.0.1",
+    "gulp-rev-all": "^5.1.0",
+    "jszip": "^3.10.2",
+    "nodemon": "^3.1.14",
+    "wrangler": "^4.35.0"
   },
+  "type": "module",
   "scripts": {
+    "build": "node build.js",
+    "watch": "nodemon --watch src --ext \"*\" --exec \"node build.js\"",
     "postinstall": "mkdir public/vendor; cp node_modules/jszip/dist/jszip.min.js public/vendor"
+  },
+  "dependencies": {
+    "npm": "^12.2.1"
   }
 }

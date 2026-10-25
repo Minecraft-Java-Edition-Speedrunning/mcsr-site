@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>MCSR Rules Redirect</title>
+  <meta name="description" content="The latest PDF release of the Minecraft Speedrunning ruleset.">
+  <link rel="stylesheet" href="style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      document.getElementById("js").remove()
+      fetch("versions.json")
+        .then(res => {
+          if (!res.ok) {
+            document.getElementById("js").innerText = "can't get versions.json"
+            throw new Error("http error status: " + response.status);
+          }
+          return res.json();
+        })
+        .then(data => {
+          const version = Object.keys(data)[0];
+          link = document.getElementById("githack")
+          link.href = link.innerText = "rules_" + version + ".pdf"
+          window.location.replace(link.href)
+        })
+    })
+  </script>
+</head>
+<body>
+  <h2 id="js">This site requires JavaScript!</h2>
+  <p>Redirecting to: <a id="githack">loading</a></p>
+</body>
+</html>

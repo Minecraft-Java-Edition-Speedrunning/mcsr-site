@@ -1,4 +1,4 @@
-@import "/vendor/sora.css";
+@import "/vendor/dejavu.css";
 @import "/vendor/mojangles.css";
 
 /* a:not(.button) {
@@ -145,7 +145,7 @@ input+label::before {
 }
 
 body {
-    font-family: "Sora";
+    font-family: "DejaVu Sans";
     background-color: var(--background);
     color: snow;
     max-width: 960px;

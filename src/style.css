@@ -1,4 +1,4 @@
-@import "/vendor/sora.css";
+@import "/vendor/dejavu.css";
 @import "/vendor/mojangles.css";
 
 :root {
@@ -15,7 +15,7 @@ a:hover {
 }
 
 body {
-    font-family: "Sora";
+    font-family: "DejaVu Sans";
     letter-spacing: -0.01em;
     margin: 20px;
     background-color: light-dark(lavender, canvas);
