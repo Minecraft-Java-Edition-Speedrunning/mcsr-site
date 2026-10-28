@@ -10,7 +10,7 @@
   "scripts": {
     "build": "node build.js",
     "watch": "nodemon --watch src --ext \"*\" --exec \"node build.js\"",
-    "postinstall": "mkdir public/vendor; cp node_modules/jszip/dist/jszip.min.js public/vendor"
+    "postinstall": "mkdir src/vendor; cp node_modules/jszip/dist/jszip.min.js src/vendor"
   },
   "dependencies": {
     "npm": "^12.2.1"

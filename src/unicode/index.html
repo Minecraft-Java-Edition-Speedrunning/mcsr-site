@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Character Checker</title>
+    <link rel="stylesheet" href="/style.css">
+    <script>
+        function c2cpt(c) {
+            if ([...c].length != 1) return undefined
+            return c[0].codePointAt(0)
+        }
+
+        function c2cptfmt(c) {
+            if ([...c].length != 1) return undefined
+            return "U+" + c[0].codePointAt(0).toString(16) + ` <span onclick=copy(this.textContent) title="click to copy">“${c}”</span>`
+        }
+
+        function copy(text) {
+            navigator.clipboard.writeText([...text][1])
+        }
+    
+        // Arabic Presentation Forms-B block (U+FE70-U+FEFF), CJK Unified Ideographs block (U+4E00–9FFF), Hangul Syllables block (U+AC00-U+D7AF), and Hiragana and Katakana blocks (U+3040-U+30FF).
+        function map_block(codepoint) {
+            if (codepoint >= 0xfe70 && codepoint <= 0xfeff) return "Arabic Presentation Forms-B"
+            if (codepoint >= 0x4e00 && codepoint <= 0x9fff) return "CJK Unified Ideographs"
+            if (codepoint >= 0xac00 && codepoint <= 0xd7af) return "Hangul Syllables"
+            if (codepoint >= 0x3040 && codepoint <= 0x30ff) return "Hiragana and Katakana"
+            return undefined
+        }
+    
+        function check_legal() {
+            const div = document.getElementById("legal_res")
+            const text = document.getElementById("legal_char").value.trim()
+            const chars = [...text]
+            if (chars.length == 0) {
+                return
+            }
+            if (chars.length > 1) {
+                div.innerHTML = "error: multiple characters!<br>" + chars.map(c => c2cptfmt(c)).join("<br>")
+            } else {
+                cpt = c2cpt(chars);
+                block = map_block(cpt)
+                div.innerHTML = "legal: " + (block ? "no" : "yes")
+                 + "<br>id: " + c2cptfmt(chars)
+                 + (block ? "<br>block: " + block : "")
+            }
+        }
+
+        function arr_equal(a, b) {
+            return a.length == b.length && a.every((v, i) => v == b[i])
+        }
+
+        function check_equal() {
+            const div = document.getElementById("equal_res")
+            const text1 = [...document.getElementById("equal_1").value.trim()]
+            const text2 = [...document.getElementById("equal_2").value.trim()]
+            if (text1.length == 0 || text2.length == 0) {
+                return
+            }
+            div.textContent = ""
+            if (text1.length > 1) {
+                div.innerHTML += "error in 1: multiple characters!<br>" + text1.map(c => c2cptfmt(c)).join("<br>")
+            }
+            if (text2.length > 1) {
+                div.innerHTML += "error in 2: multiple characters!<br>" + text2.map(c => c2cptfmt(c)).join("<br>")
+            }
+            else if (text1.length == 1 && text2.length == 1) {
+                lower1 = [...text1[0].toLowerCase()]
+                lower2 = [...text2[0].toLowerCase()]
+                div.innerHTML = "equal: " + (c2cpt(lower1[0]) == c2cpt(lower2[0]) ? "yes" : "no")
+                    + "<br>1: id: " + c2cptfmt(text1) + (!arr_equal(text1, lower1) ? "<br>lower: " + lower1.map(c => c2cptfmt(c)).join(", ") : "")
+                    + "<br>2: id: " + c2cptfmt(text2) + (!arr_equal(text2, lower2) ? "<br>lower: " + lower2.map(c => c2cptfmt(c)).join(", ") : "")
+            }
+        }
+    </script>
+    <style>
+        span {
+            line-height: 1;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <a href="/"><img src="/favicon.ico" alt="Home" class="icon" width="38" height="38"></a>
+        <h1 class="mojangles">Character Checker</h1>
+    </header>
+    <br>
+    <p>check if character is in one of the disallowed Unicode blocks</p><br>
+    <input type=text size=1 id=legal_char>
+    <button onclick=check_legal()>legal?</button><br><br>
+    <div id=legal_res></div>
+    <br>
+    <p>check if two characters are equal under lowercase</p><br>
+    <input type=text size=1 id=equal_1>
+    <input type=text size=1 id=equal_2>
+    <button onclick=check_equal()>equal?</button><br><br>
+    <div id=equal_res></div>
+</body>
+
+</html>
